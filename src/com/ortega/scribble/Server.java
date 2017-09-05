@@ -12,7 +12,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.net.ServerSocketFactory;
 
 import org.slf4j.Logger;
@@ -25,8 +24,6 @@ public class Server {
 
 	private static final Logger logger = LoggerFactory.getLogger(Server.class);
 	
-	public static final int DEFAULT_PORT = 34567;
-	
 	public static void main(String[] args) throws IOException {
 		
 		listNetworkInterfaces();
@@ -34,10 +31,11 @@ public class Server {
 		String publicIP = getPublicIPAddress();
 
 		ServerSocket serverSocket = ServerSocketFactory.getDefault().createServerSocket();
-		serverSocket.bind(new InetSocketAddress(DEFAULT_PORT));
+		serverSocket.bind(new InetSocketAddress(Constants.DEFAULT_PORT));
 		
-		logger.info("Public IP address: {}", publicIP);
-		logger.info("Scribble Server initialized at port {}", DEFAULT_PORT);
+		if (publicIP != null)
+			logger.info("Public IP address: {}", publicIP);
+		logger.info("Scribble Server initialized at port {}", Constants.DEFAULT_PORT);
 		
 		CopyOnWriteArrayList<Message> events = new CopyOnWriteArrayList<Message>();
 		GreetingContext context = new GreetingContext(800, 600, events);
@@ -81,11 +79,16 @@ public class Server {
 	}
 
 	private static String getPublicIPAddress() throws IOException {
-		URL url = new URL("http://checkip.amazonaws.com/");
-		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-		String ip = br.readLine();
-		br.close();
-		return ip;
+		try {
+			URL url = new URL("http://checkip.amazonaws.com/");
+			BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+			String ip = br.readLine();
+			br.close();
+			return ip;
+		} catch (Throwable e) {
+			logger.error("Failed to request public IP", e);
+			return null;
+		}
 	}
 	
 }

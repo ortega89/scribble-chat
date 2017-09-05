@@ -78,7 +78,7 @@ public class Client implements Runnable {
 	public static Socket initClient(String ipString) {
 		try {
 			byte[] ip = parseIP(ipString);
-			return SocketFactory.getDefault().createSocket(Inet4Address.getByAddress(ip), Server.DEFAULT_PORT);
+			return SocketFactory.getDefault().createSocket(Inet4Address.getByAddress(ip), Constants.DEFAULT_PORT);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, 
 					"Specify the server IP address in your configuration file.", 

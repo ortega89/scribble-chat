@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Stroke;
 
 public class Constants {
+	public static final int DEFAULT_PORT = 34567;
 	public static final String CHARSET = "UTF-8";
 
 	public static final int PEN_STROKE_WIDTH = 3;
