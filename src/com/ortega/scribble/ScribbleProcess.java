@@ -1,56 +1,53 @@
 package com.ortega.scribble;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.context.GreetingContext;
 import com.ortega.scribble.data.Message;
-import com.ortega.scribble.data.MessageType;
+import com.ortega.scribble.data.impl.Clear;
+import com.ortega.scribble.data.impl.LoginFanout;
+import com.ortega.scribble.data.impl.LoginResponse;
+import com.ortega.scribble.data.impl.LogoutFanout;
 
 public class ScribbleProcess implements Runnable {
 
 	private static final Logger logger = LoggerFactory.getLogger(ScribbleProcess.class);
 	
 	private Thread thread;
-	private Socket in;
+	private Socket clientSocket;
 	private NavigableQueue queue;
-	private Context context;
-	private Color userColor;
-	private Message login;
+	private GreetingContext context;
+	private LoginResponse login;
 	
-	public ScribbleProcess(Socket in, Context context) {
-		this.in = in;
+	public ScribbleProcess(Socket in, GreetingContext context) {
+		this.clientSocket = in;
 		this.context = context;
 		this.queue = new NavigableQueue(context.getEvents());
-		this.userColor = Color.BLACK;
 		thread = new Thread(this);
 		thread.setDaemon(true);
 		thread.start();
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void run() {
 		ScribbleProcessor proc = null;
 		try {
-			proc = ScribbleProcessor.createServerProcessor(in); 
+			proc = ScribbleProcessor.createServerProcessor(clientSocket); 
 		} catch (IOException e) {
 			logger.error("Failed to create a server-side Scribble processor", e);
 		}
 		
-		login = new Message(MessageType.LOGINRESPONSE, context.newUser());
-		login.setWidth(context.getWidth());
-		login.setHeight(context.getHeight());
-		login.copyEvents(context.getEvents());
+		login = new LoginResponse(context);
 		if (!proc.send(login)) {
 			logger.error("Login failed");
 			return;
 		}
 			
-		queue.offer(new Message(MessageType.LOGINFANOUT, login.getUserIndex()));
+		queue.offer(new LoginFanout(login.getUserIndex()));
 		
 		boolean closed = false;
 		
@@ -66,9 +63,9 @@ public class ScribbleProcess implements Runnable {
 						StringBuilder s = new StringBuilder("Sending message: ");
 						s.append(fan.toString());
 						if (sent)
-							s.append("\nSuccessfully");
+							s.append(" successfully");
 						else {
-							s.append("\nFailed");
+							s.append(" failed");
 						}
 						logger.debug("{}", s);
 					}
@@ -79,28 +76,16 @@ public class ScribbleProcess implements Runnable {
 				//Now try to read an incoming message
 				if (proc.canRead()) {
 					Message msg = proc.read();
+					msg.setUserIndex(login.getUserIndex());
 					
 					if (logger.isDebugEnabled()) {
-						logger.debug("Received from {}", in.getInetAddress());
+						logger.debug("Received from {}:{}", clientSocket.getInetAddress(), clientSocket.getPort());
 						logger.debug(msg.toString());
 					}
 
-					switch (msg.getType()) {
-					case PICKCOLOR:
-						userColor = msg.getColor();
-					case SETNAME:
-						queue.offer(msg);
-						break;
-					case CLEAR:
+					if (msg instanceof Clear)
 						queue.clearDrawings();
-						queue.offer(msg);
-						break;
-					case PENDOWN:
-					case PENMOVE:
-						msg.setColor(userColor);
-						queue.offer(msg);
-						break;
-					}
+					queue.offer(msg);
 				} else {
 					Thread.sleep(20);
 				}
@@ -111,7 +96,7 @@ public class ScribbleProcess implements Runnable {
 			}
 		}
 		logger.info("Process finished");
-		queue.offer(new Message(MessageType.LOGOUTFANOUT, login.getUserIndex()));
+		queue.offer(new LogoutFanout(login.getUserIndex()));
 	}
 	
 }

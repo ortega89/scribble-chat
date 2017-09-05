@@ -3,8 +3,7 @@ package com.ortega.scribble;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ortega.scribble.data.Message;
-import com.ortega.scribble.data.MessageType;
+import com.ortega.scribble.data.impl.Heartbeat;
 
 public class Heart implements Runnable {
 
@@ -25,8 +24,8 @@ public class Heart implements Runnable {
 	public void run() {
 		while (!stopped) {
 			try {
-				queue.offer(new Message(MessageType.HEARTBEAT, (byte) 0));
-				Thread.sleep(1000);
+				queue.offer(new Heartbeat());
+				Thread.sleep(Constants.HEARTBEAT_DELAY);
 			} catch (InterruptedException e) {
 				logger.info("Heart stopped");
 			}
@@ -36,5 +35,4 @@ public class Heart implements Runnable {
 	public void stop() {
 		stopped = true;
 	}
-
 }

@@ -18,6 +18,7 @@ import javax.net.ServerSocketFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.context.GreetingContext;
 import com.ortega.scribble.data.Message;
 
 public class Server {
@@ -39,7 +40,7 @@ public class Server {
 		logger.info("Scribble Server initialized at port {}", DEFAULT_PORT);
 		
 		CopyOnWriteArrayList<Message> events = new CopyOnWriteArrayList<Message>();
-		Context context = new Context(800, 600, events);
+		GreetingContext context = new GreetingContext(800, 600, events);
 		
 		new Heart(new NavigableQueue(events));
 		

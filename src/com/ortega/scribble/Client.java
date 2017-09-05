@@ -17,7 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ortega.scribble.data.Message;
-import com.ortega.scribble.data.MessageType;
+import com.ortega.scribble.data.impl.LoginResponse;
+import com.ortega.scribble.data.impl.SetName;
 import com.ortega.scribble.gui.ScribbleFrame;
 
 
@@ -48,12 +49,11 @@ public class Client implements Runnable {
 				return;
 			
 			ScribbleProcessor proc = ScribbleProcessor.createClientProcessor(clientSocket);
-			Message loginData = proc.read();
+			LoginResponse loginData = (LoginResponse) proc.read();
 			
 			String userName = getUserName(passedUserName);
 			
-			Message msg = new Message(MessageType.SETNAME, loginData.getUserIndex());
-			msg.setName(userName);
+			Message msg = new SetName(userName);
 			proc.send(msg);
 	
 			JFrame frame = new ScribbleFrame(loginData, proc);

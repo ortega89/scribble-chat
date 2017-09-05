@@ -4,6 +4,7 @@ import java.util.AbstractQueue;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.ortega.scribble.data.Cleanable;
 import com.ortega.scribble.data.Message;
 
 public class NavigableQueue extends AbstractQueue<Message> {
@@ -61,17 +62,11 @@ public class NavigableQueue extends AbstractQueue<Message> {
 		}
 	}
 	
-	@SuppressWarnings("incomplete-switch")
 	public void clearDrawings() {
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i) != null) {
-				switch (list.get(i).getType()) {
-					case PENDOWN:
-					case PENMOVE:
-					case CLEAR:
-						list.set(i, null);
-				}
-			}
+			Message msg = list.get(i);
+			if (msg != null && msg instanceof Cleanable)
+				list.set(i, null);
 		}
 	}
 

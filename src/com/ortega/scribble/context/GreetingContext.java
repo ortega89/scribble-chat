@@ -1,22 +1,22 @@
-package com.ortega.scribble;
+package com.ortega.scribble.context;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.ortega.scribble.data.Message;
 
-public class Context {
+public class GreetingContext {
 
 	private short width, height;
 	private CopyOnWriteArrayList<Message> events;
 	private short nextUser = 1;
 	
-	public Context(short width, short height, CopyOnWriteArrayList<Message> events) {
+	public GreetingContext(short width, short height, CopyOnWriteArrayList<Message> events) {
 		this.width = width;
 		this.height = height;
 		this.events = events;
 	}
 	
-	public Context(int width, int height, CopyOnWriteArrayList<Message> events) {
+	public GreetingContext(int width, int height, CopyOnWriteArrayList<Message> events) {
 		this((short) width, (short) height, events);
 	}
 	

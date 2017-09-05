@@ -11,18 +11,16 @@ import javax.swing.JPanel;
 
 import com.ortega.scribble.ScribbleProcessor;
 import com.ortega.scribble.data.Message;
-import com.ortega.scribble.data.MessageType;
+import com.ortega.scribble.data.impl.PickColor;
 
 @SuppressWarnings("serial")
 public class Palette extends JPanel {
 	
 	private BufferedImage palette;
 	private ScribbleProcessor proc;
-	private Message loginData;
 	
 	public Palette(int width, int height, ScribbleProcessor proc, Message loginData) {
 		this.proc = proc;
-		this.loginData = loginData;
 		this.setPreferredSize(new Dimension(width, height));
 		palette = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		generatePalette(palette, 0.9f);
@@ -62,8 +60,7 @@ public class Palette extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (e.getButton() == MouseEvent.BUTTON1) {
-				Message msg = new Message(MessageType.PICKCOLOR, loginData.getUserIndex());
-				msg.setColor(new Color(palette.getRGB(e.getX(), e.getY())));
+				Message msg = new PickColor(palette.getRGB(e.getX(), e.getY()));
 				proc.send(msg);
 			}
 		}	

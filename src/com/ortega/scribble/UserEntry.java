@@ -22,7 +22,6 @@ public class UserEntry {
 	private ImageIcon icon;
 	private static BufferedImage src;
 	
-
 	static {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gs = ge.getDefaultScreenDevice();

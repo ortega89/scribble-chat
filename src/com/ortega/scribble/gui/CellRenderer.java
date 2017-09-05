@@ -27,7 +27,8 @@ public class CellRenderer extends DefaultListCellRenderer {
 	public Component getListCellRendererComponent(JList<?> list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		UserEntry src = (UserEntry) value;
-		JLabel out = (JLabel) super.getListCellRendererComponent(list, src.getName(), index, isSelected, cellHasFocus);
+		JLabel out = (JLabel) super.getListCellRendererComponent(
+				list, src.getName(), index, isSelected, cellHasFocus);
 		out.setFont(out.getFont().deriveFont(
 				(src.getIndex() == myIndex ? Font.ITALIC : Font.PLAIN) | 
 				(cleaner != null && src.getIndex() == cleaner ? Font.BOLD : Font.PLAIN)));
