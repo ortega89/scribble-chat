@@ -23,5 +23,7 @@ public class Constants {
 	public static final long HEARTBEAT_TIMEOUT = 20000;
 	public static final long HEARTBEAT_DELAY = 5000;
 	
+	public static final int USER_COLOR_INDICATOR_SIZE = 16;
+	
 	private Constants() {}
 }

@@ -27,7 +27,7 @@ public abstract class UsersContext {
 	
 	public void addUser(byte userIndex) {
 		logger.info("Adding user # "+userIndex);
-		UserEntry user = new UserEntry("Guest", userIndex);
+		UserEntry user = createUserEntry("Guest", userIndex);
 		names.put(userIndex, user);
 		doAddUser(user);
 	}
@@ -65,6 +65,7 @@ public abstract class UsersContext {
 			logger.error("USER NOT FOUND, UNABLE TO SET COLOR");
 	}
 
+	protected abstract UserEntry createUserEntry(String name, byte userIndex);
 	protected abstract void doAddUser(UserEntry user);
 	protected abstract void doRemoveUser(byte userIndex);
 	protected abstract void doRenameUser(byte userIndex, String userName);

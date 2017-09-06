@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
+import com.ortega.scribble.SwingUserEntry;
 import com.ortega.scribble.UserEntry;
 import com.ortega.scribble.gui.CellRenderer;
 
@@ -60,5 +61,10 @@ public class SwingUsersContext extends UsersContext {
 	@Override
 	protected void doSetUserColor(byte userIndex, Color color) {
 		list.repaint();
+	}
+
+	@Override
+	protected UserEntry createUserEntry(String name, byte userIndex) {
+		return new SwingUserEntry(name, userIndex);
 	}
 }

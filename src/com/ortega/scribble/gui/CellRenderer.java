@@ -7,7 +7,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import com.ortega.scribble.UserEntry;
+import com.ortega.scribble.SwingUserEntry;
 
 @SuppressWarnings("serial")
 public class CellRenderer extends DefaultListCellRenderer {
@@ -26,7 +26,7 @@ public class CellRenderer extends DefaultListCellRenderer {
 	@Override
 	public Component getListCellRendererComponent(JList<?> list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
-		UserEntry src = (UserEntry) value;
+		SwingUserEntry src = (SwingUserEntry) value;
 		JLabel out = (JLabel) super.getListCellRendererComponent(
 				list, src.getName(), index, isSelected, cellHasFocus);
 		out.setFont(out.getFont().deriveFont(
