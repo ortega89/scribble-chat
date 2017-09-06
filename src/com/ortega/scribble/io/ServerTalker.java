@@ -1,4 +1,4 @@
-package com.ortega.scribble;
+package com.ortega.scribble.io;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -6,6 +6,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.NavigableQueue;
 import com.ortega.scribble.context.GreetingContext;
 import com.ortega.scribble.data.Message;
 import com.ortega.scribble.data.impl.Clear;
@@ -13,9 +14,9 @@ import com.ortega.scribble.data.impl.LoginFanout;
 import com.ortega.scribble.data.impl.LoginResponse;
 import com.ortega.scribble.data.impl.LogoutFanout;
 
-public class ScribbleProcess implements Runnable {
+public class ServerTalker implements Runnable {
 
-	private static final Logger logger = LoggerFactory.getLogger(ScribbleProcess.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServerTalker.class);
 	
 	private Thread thread;
 	private Socket clientSocket;
@@ -23,7 +24,7 @@ public class ScribbleProcess implements Runnable {
 	private GreetingContext context;
 	private LoginResponse login;
 	
-	public ScribbleProcess(Socket in, GreetingContext context) {
+	public ServerTalker(Socket in, GreetingContext context) {
 		this.clientSocket = in;
 		this.context = context;
 		this.queue = new NavigableQueue(context.getEvents());

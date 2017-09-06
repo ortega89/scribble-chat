@@ -1,10 +1,11 @@
-package com.ortega.scribble;
+package com.ortega.scribble.io;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.Constants;
 import com.ortega.scribble.context.GraphicContext;
 import com.ortega.scribble.context.UsersContext;
 import com.ortega.scribble.data.DrawAction;

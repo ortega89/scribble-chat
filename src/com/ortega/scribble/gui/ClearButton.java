@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import com.ortega.scribble.ScribbleProcessor;
 import com.ortega.scribble.data.impl.Clear;
+import com.ortega.scribble.io.ScribbleProcessor;
 
 @SuppressWarnings("serial")
 public class ClearButton extends JButton implements ActionListener {

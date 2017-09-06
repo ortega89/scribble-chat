@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import com.ortega.scribble.context.GreetingContext;
 import com.ortega.scribble.data.Message;
+import com.ortega.scribble.io.Heart;
+import com.ortega.scribble.io.ServerTalker;
 
 public class Server {
 
@@ -47,7 +49,7 @@ public class Server {
 			if (in != null)
 				logger.info("New connection: "+in.getInetAddress().toString());
 			
-			new ScribbleProcess(in, context);
+			new ServerTalker(in, context);
 		}
 	}
 

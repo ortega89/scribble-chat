@@ -1,8 +1,10 @@
-package com.ortega.scribble;
+package com.ortega.scribble.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.Constants;
+import com.ortega.scribble.NavigableQueue;
 import com.ortega.scribble.data.impl.Heartbeat;
 
 public class Heart implements Runnable {

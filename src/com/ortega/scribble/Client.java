@@ -19,6 +19,9 @@ import com.ortega.scribble.data.Message;
 import com.ortega.scribble.data.impl.LoginResponse;
 import com.ortega.scribble.data.impl.SetName;
 import com.ortega.scribble.gui.ScribbleFrame;
+import com.ortega.scribble.io.ClientTalker;
+import com.ortega.scribble.io.ScribbleProcessor;
+import com.ortega.scribble.io.SwingClientTalker;
 
 
 public class Client implements Runnable {

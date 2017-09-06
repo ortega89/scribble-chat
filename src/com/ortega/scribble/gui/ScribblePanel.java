@@ -7,11 +7,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import com.ortega.scribble.ScribbleProcessor;
+
 import com.ortega.scribble.context.GraphicContext;
 import com.ortega.scribble.data.Message;
 import com.ortega.scribble.data.impl.PenDown;
 import com.ortega.scribble.data.impl.PenMove;
+import com.ortega.scribble.io.ScribbleProcessor;
 
 @SuppressWarnings("serial")
 public class ScribblePanel extends JPanel

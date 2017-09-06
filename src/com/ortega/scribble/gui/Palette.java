@@ -9,9 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-import com.ortega.scribble.ScribbleProcessor;
 import com.ortega.scribble.data.Message;
 import com.ortega.scribble.data.impl.PickColor;
+import com.ortega.scribble.io.ScribbleProcessor;
 
 @SuppressWarnings("serial")
 public class Palette extends JPanel {

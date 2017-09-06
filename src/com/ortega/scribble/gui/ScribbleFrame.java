@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import com.ortega.scribble.ScribbleProcessor;
 import com.ortega.scribble.context.GraphicContext;
 import com.ortega.scribble.context.SwingGraphicContext;
 import com.ortega.scribble.context.SwingUsersContext;
 import com.ortega.scribble.context.UsersContext;
 import com.ortega.scribble.data.impl.LoginResponse;
+import com.ortega.scribble.io.ScribbleProcessor;
 
 @SuppressWarnings("serial")
 public class ScribbleFrame extends JFrame {

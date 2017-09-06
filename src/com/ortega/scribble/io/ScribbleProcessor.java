@@ -1,4 +1,4 @@
-package com.ortega.scribble;
+package com.ortega.scribble.io;
 
 import java.io.IOException;
 import java.io.InputStream;

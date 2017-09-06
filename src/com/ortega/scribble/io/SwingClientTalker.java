@@ -1,4 +1,4 @@
-package com.ortega.scribble;
+package com.ortega.scribble.io;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
