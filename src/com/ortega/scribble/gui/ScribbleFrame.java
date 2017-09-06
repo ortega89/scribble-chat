@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import com.ortega.scribble.Constants;
 import com.ortega.scribble.context.GraphicContext;
 import com.ortega.scribble.context.SwingGraphicContext;
 import com.ortega.scribble.context.SwingUsersContext;
@@ -19,27 +20,24 @@ import com.ortega.scribble.io.ScribbleProcessor;
 
 @SuppressWarnings("serial")
 public class ScribbleFrame extends JFrame {
-	
-	private static final int PALETTE_WIDTH = 160;
-	private static final int PALETTE_HEIGHT = PALETTE_WIDTH;
-	
+		
 	private SwingGraphicContext graphicContext;
 	private SwingUsersContext usersContext;
 	
 	public ScribbleFrame(LoginResponse loginData, ScribbleProcessor proc) {		
 		this.setTitle("Scribble");
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(loginData.getWidth()+PALETTE_WIDTH+4, loginData.getHeight()+32));
+		this.setPreferredSize(new Dimension(loginData.getWidth()+Constants.PALETTE_WIDTH+4, loginData.getHeight()+32));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
 		JPanel rightPanel = new JPanel(new BorderLayout());
-		rightPanel.setPreferredSize(new Dimension(PALETTE_WIDTH, PALETTE_HEIGHT));
+		rightPanel.setPreferredSize(new Dimension(Constants.PALETTE_WIDTH, Constants.PALETTE_HEIGHT));
 		this.add(rightPanel, BorderLayout.EAST);
 
 		JPanel tools = new JPanel(new BorderLayout());
 		
-		Palette palette = new Palette(PALETTE_WIDTH, PALETTE_HEIGHT, proc, loginData);
+		Palette palette = new Palette(Constants.PALETTE_WIDTH, Constants.PALETTE_HEIGHT, proc, loginData);
 		tools.add(palette, BorderLayout.CENTER);
 				
 		ClearButton clear = new ClearButton("Clear", proc);
