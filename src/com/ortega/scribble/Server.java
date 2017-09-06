@@ -40,7 +40,8 @@ public class Server {
 		logger.info("Scribble Server initialized at port {}", Constants.DEFAULT_PORT);
 		
 		CopyOnWriteArrayList<Message> events = new CopyOnWriteArrayList<Message>();
-		GreetingContext context = new GreetingContext(800, 600, events);
+		GreetingContext context = new GreetingContext(
+				Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT, events);
 		
 		new Heart(new NavigableQueue(events));
 		

@@ -8,6 +8,9 @@ public class Constants {
 	public static final int DEFAULT_PORT = 34567;
 	public static final String CHARSET = "UTF-8";
 
+	public static final int CANVAS_WIDTH = 800;
+	public static final int CANVAS_HEIGHT = 600;
+
 	public static final int PALETTE_WIDTH = 160;
 	public static final int PALETTE_HEIGHT = PALETTE_WIDTH;
 	
