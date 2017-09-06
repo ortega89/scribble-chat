@@ -1,6 +1,7 @@
 package com.ortega.scribble.context;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -8,13 +9,20 @@ import java.util.Map;
 
 import com.ortega.scribble.Constants;
 
-public class GraphicContext {
+public abstract class GraphicContext {
 	private BufferedImage canvas;
 	private Map<Byte, Point> penPositions = new HashMap<>();
 	private Map<Byte, Color> penColors = new HashMap<>();
 	
 	public GraphicContext(BufferedImage canvas) {
 		this.canvas = canvas;
+		initCanvas();
+	}
+	
+	private void initCanvas() {
+		Graphics g = canvas.getGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 	
 	public BufferedImage getCanvas() {
@@ -38,5 +46,5 @@ public class GraphicContext {
 		penColors.put(userIndex, color);
 	}
 	
-	
+	public abstract void doRepaint(); 
 }

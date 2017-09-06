@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 
 import javax.activity.InvalidActivityException;
 import javax.net.SocketFactory;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -48,15 +47,15 @@ public class Client implements Runnable {
 			if (clientSocket == null)
 				return;
 			
-			ScribbleProcessor proc = ScribbleProcessor.createClientProcessor(clientSocket);
-			LoginResponse loginData = (LoginResponse) proc.read();
+			ScribbleProcessor processor = ScribbleProcessor.createClientProcessor(clientSocket);
+			LoginResponse loginData = (LoginResponse) processor.read();
 			
 			String userName = getUserName(passedUserName);
 			
 			Message msg = new SetName(userName);
-			proc.send(msg);
+			processor.send(msg);
 	
-			JFrame frame = new ScribbleFrame(loginData, proc);
+			ScribbleFrame frame = new ScribbleFrame(loginData, processor);
 			
 			frame.addWindowListener(new WindowAdapter() {
 				@Override
@@ -70,6 +69,13 @@ public class Client implements Runnable {
 			});
 			
 			frame.setVisible(true);
+			
+			ClientTalker talker = new SwingClientTalker(
+					processor,
+					frame.getGraphicContext(),
+					frame.getUsersContext(), 
+					frame);
+			new Thread(talker).start();
 		} catch (Exception e) {
 			logger.error("", e);
 		}

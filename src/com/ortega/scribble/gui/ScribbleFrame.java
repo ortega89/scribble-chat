@@ -3,12 +3,18 @@ package com.ortega.scribble.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import com.ortega.scribble.ScribbleProcessor;
+import com.ortega.scribble.context.GraphicContext;
+import com.ortega.scribble.context.SwingGraphicContext;
+import com.ortega.scribble.context.SwingUsersContext;
+import com.ortega.scribble.context.UsersContext;
 import com.ortega.scribble.data.impl.LoginResponse;
 
 @SuppressWarnings("serial")
@@ -17,7 +23,10 @@ public class ScribbleFrame extends JFrame {
 	private static final int PALETTE_WIDTH = 160;
 	private static final int PALETTE_HEIGHT = PALETTE_WIDTH;
 	
-	public ScribbleFrame(LoginResponse loginData, ScribbleProcessor proc) {
+	private SwingGraphicContext graphicContext;
+	private SwingUsersContext usersContext;
+	
+	public ScribbleFrame(LoginResponse loginData, ScribbleProcessor proc) {		
 		this.setTitle("Scribble");
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(new Dimension(loginData.getWidth()+PALETTE_WIDTH+4, loginData.getHeight()+32));
@@ -38,17 +47,36 @@ public class ScribbleFrame extends JFrame {
 		clear.setPreferredSize(new Dimension(palette.getWidth(), 32));
 		tools.add(clear, BorderLayout.SOUTH);
 
-		UsersPanel users = new UsersPanel(loginData.getUserIndex());
-		JScrollPane scroller = new JScrollPane(users);
+		UsersPanel usersList = new UsersPanel(loginData.getUserIndex());
+		JScrollPane scroller = new JScrollPane(usersList);
 		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroller.setBackground(Color.RED);
 		
 		rightPanel.add(tools, BorderLayout.NORTH);
 		rightPanel.add(scroller, BorderLayout.CENTER);
 		
-		ScribblePanel canvas = new ScribblePanel(this, loginData, proc, users);		
+		initContexts(loginData, usersList);
+		
+		ScribblePanel canvas = new ScribblePanel(graphicContext, proc);		
+		graphicContext.setPaintBox(canvas);
+		
 		this.add(canvas, BorderLayout.CENTER);
 		
-		this.pack();
+		this.pack();		
+	}
+	
+	private void initContexts(LoginResponse loginData, UsersPanel usersList) {
+		BufferedImage canvas = new BufferedImage(
+				loginData.getWidth(), loginData.getHeight(), BufferedImage.TYPE_INT_RGB);
+		graphicContext = new SwingGraphicContext(canvas);
+		usersContext = new SwingUsersContext(loginData.getUserIndex(), usersList);
+	}
+
+	public GraphicContext getGraphicContext() {
+		return graphicContext;
+	}
+
+	public UsersContext getUsersContext() {
+		return usersContext;
 	}
 }
