@@ -59,6 +59,12 @@ public abstract class ClientTalker implements Runnable {
 				}
 	
 			}
+			
+			try {
+				Thread.sleep(Constants.CLIENT_DELAY_MS);
+			} catch (InterruptedException e) {
+				return;
+			}
 		}
 	}
 

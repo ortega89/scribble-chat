@@ -28,5 +28,8 @@ public class Constants {
 	
 	public static final int USER_COLOR_INDICATOR_SIZE = 16;
 	
+	public static final long CLIENT_DELAY_MS = 20;
+	public static final long SERVER_DELAY_MS = 20;
+	
 	private Constants() {}
 }

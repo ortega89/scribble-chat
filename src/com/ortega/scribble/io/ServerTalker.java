@@ -6,6 +6,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ortega.scribble.Constants;
 import com.ortega.scribble.NavigableQueue;
 import com.ortega.scribble.context.GreetingContext;
 import com.ortega.scribble.data.Message;
@@ -88,7 +89,7 @@ public class ServerTalker implements Runnable {
 						queue.clearDrawings();
 					queue.offer(msg);
 				} else {
-					Thread.sleep(20);
+					Thread.sleep(Constants.SERVER_DELAY_MS);
 				}
 			} catch (IOException e) {
 				logger.error("", e);
